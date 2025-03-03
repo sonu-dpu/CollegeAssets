@@ -37,63 +37,74 @@ Now, Iâ€™ll create the **Mermaid diagrams** for all three levels. Stay tuned! ðŸ
 ### **Level 0 DFD (Context Diagram)**
 ```mermaid
 graph TD;
-    %% External Entities
     Student["Student"] -->|Sends Queries / Requests| AIStudyBuddy["AI Study Buddy System"];
     Educator["Educator"] -->|Tracks Student Progress| AIStudyBuddy;
 
-    %% System Interactions
     AIStudyBuddy -->|Fetches Data| Database["Appwrite Database"];
     AIStudyBuddy -->|Processes AI Queries| AIModel["AI Model (Hugging Face/OpenAI)"];
 
-    %% Responses
     AIModel -->|Provides AI Responses| AIStudyBuddy;
     Database -->|Returns Stored Data| AIStudyBuddy;
     AIStudyBuddy -->|Delivers Responses / Study Plans| Student;
+
 ```
 ---
 ### **Level 1 DFD (Top-Level DFD)**
 ```mermaid
 graph TD;
-    %% Main System
-    Student["Student"] -->|Login / Signup| AuthProcess["1. User Authentication"];
-    AuthProcess -->|Stores User Data| UserDB["D1: User Database"];
+    subgraph Authentication
+        Student -->|Login / Signup| AuthProcess["User Authentication"];
+        AuthProcess -->|Stores User Data| UserDB["D1: User Database"];
+    end
 
-    Student -->|Asks Doubts / Requests Summary| AIProcess["2. AI-Powered Learning"];
-    AIProcess -->|Fetches Study Material| StudyDB["D2: Study Materials"];
-    AIProcess -->|Processes with AI| AIModel["AI Model"];
-    AIModel -->|Returns AI Responses| AIProcess;
-    AIProcess -->|Delivers Answer| Student;
+    subgraph AI Learning
+        Student -->|Asks Doubts / Requests Summary| AIProcess["AI-Powered Learning"];
+        AIProcess -->|Fetches Study Material| StudyDB["D2: Study Materials"];
+        AIProcess -->|Processes with AI| AIModel["AI Model"];
+        AIModel -->|Returns AI Responses| AIProcess;
+        AIProcess -->|Delivers Answer| Student;
+    end
 
-    Student -->|Creates Study Plan| StudyPlan["3. Study Plan Customization"];
-    StudyPlan -->|Stores Data| PlanDB["D3: Study Plans"];
+    subgraph Study Plan
+        Student -->|Creates Study Plan| StudyPlan["Study Plan Customization"];
+        StudyPlan -->|Stores Data| PlanDB["D3: Study Plans"];
+    end
 
-    Student -->|Takes Quiz| Assessments["4. Assessments & Progress Tracking"];
-    Assessments -->|Stores Scores| QuizDB["D4: Quiz Results"];
-    Educator["Educator"] -->|Monitors Progress| Assessments;
+    subgraph Assessments
+        Student -->|Takes Quiz| Assessments["Assessments & Progress Tracking"];
+        Assessments -->|Stores Scores| QuizDB["D4: Quiz Results"];
+        Educator -->|Monitors Progress| Assessments;
+    end
 
-    Student -->|Uses Voice Features| SpeechModule["5. Speech-to-Text & Text-to-Speech"];
-    SpeechModule -->|Processes Audio/Text| AIModel;
+    subgraph Voice Features
+        Student -->|Uses Voice Features| SpeechModule["Speech-to-Text & Text-to-Speech"];
+        SpeechModule -->|Processes Audio/Text| AIModel;
+    end
 ```
 ---
 ### **Level 2 DFD (Detailed DFD - Breakdown of AI-Powered Learning Assistance)**
 ```mermaid
 graph TD;
-    %% AI-Powered Learning Breakdown
-    Student["Student"] -->|Asks a Doubt| QueryHandler["2.1 Query Processing"];
-    QueryHandler -->|Fetches Study Content| StudyDB["D2: Study Materials"];
-    QueryHandler -->|Sends Query to AI| AIModel["AI Model"];
+    subgraph AI Query Handling
+        Student -->|Asks a Doubt| QueryHandler["Query Processing"];
+        QueryHandler -->|Fetches Study Content| StudyDB["D2: Study Materials"];
+        QueryHandler -->|Sends Query to AI| AIModel["AI Model"];
+    end
 
-    AIModel -->|Processes Question| NLP["2.2 Natural Language Processing"];
-    NLP -->|Generates Response| AIResponse["2.3 AI Response Generation"];
-    AIResponse -->|Sends AI Answer| QueryHandler;
-    QueryHandler -->|Delivers Answer| Student;
+    subgraph AI Response Generation
+        AIModel -->|Processes Question| NLP["Natural Language Processing"];
+        NLP -->|Generates Response| AIResponse["AI Response Generation"];
+        AIResponse -->|Sends AI Answer| QueryHandler;
+        QueryHandler -->|Delivers Answer| Student;
+    end
 
-    %% Study Summarization
-    Student -->|Requests Summary| Summarizer["2.4 Study Material Summarization"];
-    Summarizer -->|Fetches Content| StudyDB;
-    Summarizer -->|Processes Content| AIModel;
-    AIModel -->|Generates Summary| Summarizer;
-    Summarizer -->|Delivers Summary| Student;
+    subgraph Study Summarization
+        Student -->|Requests Summary| Summarizer["Study Material Summarization"];
+        Summarizer -->|Fetches Content| StudyDB;
+        Summarizer -->|Processes Content| AIModel;
+        AIModel -->|Generates Summary| Summarizer;
+        Summarizer -->|Delivers Summary| Student;
+    end
 ```
 
 ---
