@@ -52,34 +52,24 @@ graph TD;
 ### **Level 1 DFD (Top-Level DFD)**
 ```mermaid
 graph TD;
-    subgraph Authentication
-        Student -->|Login / Signup| AuthProcess["User Authentication"];
-        AuthProcess -->|Stores User Data| UserDB["D1: User Database"];
-    end
+    Student["Student"] -->|Login/Signup| AuthProcess["User Authentication"];
+    AuthProcess -->|Stores User Data| UserDB["D1: User Database"];
 
-    subgraph AI Learning
-        Student -->|Asks Doubts / Requests Summary| AIProcess["AI-Powered Learning"];
-        AIProcess -->|Fetches Study Material| StudyDB["D2: Study Materials"];
-        AIProcess -->|Processes with AI| AIModel["AI Model"];
-        AIModel -->|Returns AI Responses| AIProcess;
-        AIProcess -->|Delivers Answer| Student;
-    end
+    Student -->|Asks Doubts / Requests Summary| AIProcess["AI-Powered Learning"];
+    AIProcess -->|Fetches Study Materials| StudyDB["D2: Study Materials"];
+    AIProcess -->|Processes Queries| AIModel["AI Model"];
+    AIModel -->|Generates Responses| AIProcess;
+    AIProcess -->|Provides Answers| Student;
 
-    subgraph Study Plan
-        Student -->|Creates Study Plan| StudyPlan["Study Plan Customization"];
-        StudyPlan -->|Stores Data| PlanDB["D3: Study Plans"];
-    end
+    Student -->|Creates Study Plan| StudyPlan["Study Plan Customization"];
+    StudyPlan -->|Stores Data| PlanDB["D3: Study Plans"];
 
-    subgraph Assessments
-        Student -->|Takes Quiz| Assessments["Assessments & Progress Tracking"];
-        Assessments -->|Stores Scores| QuizDB["D4: Quiz Results"];
-        Educator -->|Monitors Progress| Assessments;
-    end
+    Student -->|Takes Quiz| Assessments["Assessments & Progress"];
+    Assessments -->|Stores Scores| QuizDB["D4: Quiz Results"];
+    Educator["Educator"] -->|Monitors Student Progress| Assessments;
 
-    subgraph Voice Features
-        Student -->|Uses Voice Features| SpeechModule["Speech-to-Text & Text-to-Speech"];
-        SpeechModule -->|Processes Audio/Text| AIModel;
-    end
+    Student -->|Uses Voice Features| SpeechModule["Speech-to-Text & Text-to-Speech"];
+    SpeechModule -->|Processes Audio/Text| AIModel;
 ```
 ---
 ### **Level 2 DFD (Detailed DFD - Breakdown of AI-Powered Learning Assistance)**
