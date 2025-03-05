@@ -100,5 +100,5 @@ graph TD;
 ---
 # Get it converred to svg, png format
 - Copy the code using copy button
-- paste the code in [mermaid.live](https://mermaid.live/)
+- paste the code in [mermaid.live]([https://mermaidchart.com/](https://www.mermaidchart.com/))
 - Export the code to svg, png by navigating to the actions section
