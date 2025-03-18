@@ -1,0 +1,14 @@
+{
+    "name": "PHP Development",
+    "image": "mcr.microsoft.com/devcontainers/php:1-8.2-bullseye",
+    "customizations": {
+      "vscode": {
+        "extensions": ["ikappas.composer"]
+      }
+    },
+    "forwardPorts": [8080],
+    "features": {
+      "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+    "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html; if [ -f composer.json ];then composer install;fi"
+  }
