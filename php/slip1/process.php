@@ -12,11 +12,13 @@ function countVowels($str) {
         'o' => 0,
         'u' => 0
     ];
+
     
-    // Count vowels and their occurrences
+    // Count vowels and their occurrences abcde
     for ($i = 0; $i < strlen($str); $i++) {
-        if (isset($vowelOccurrences[$str[$i]])) {
-            $vowelOccurrences[$str[$i]]++;
+        $currentChar = $str[$i];
+        if (isset($vowelOccurrences[$currentChar])) {
+            $vowelOccurrences[$currentChar]++;
             $vowelCount++;
         }
     }
