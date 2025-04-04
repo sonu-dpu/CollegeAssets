@@ -27,6 +27,10 @@ public:
         }
     }
     char operator[](int i){
+        if(i<0 || i>=length){
+            cout<<"Array index out of bound for index "<<i<<endl;
+            return ' ';
+        }
         return str[i];
     }
     void dispaly(){
