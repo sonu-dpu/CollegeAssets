@@ -1,17 +1,17 @@
 #include <iostream>
-#include <cmath>    // For M_PI
+#include <cmath>    
 
 using namespace std;
 
-// Class for Cube, Cylinder, and Sphere
+
 class VolumeCalculator {
 public:
-    // Volume of Cube: V = side^3
+    
     double Volume(double side) {
         return side * side * side;
     }
 
-    // Volume of Cylinder: V = π * radius^2 * height
+    
     double Volume(double radius, double height) {
         return M_PI * radius * radius * height;
     }
