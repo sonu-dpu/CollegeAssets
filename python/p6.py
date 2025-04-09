@@ -1,8 +1,4 @@
-set1 ={1,2,3,4,5,6}
-set2 ={7,8,9,1,2,3}
+set ={1,2,3,4,5,6,7,8,9}
 
-set_diff=set1-set2
-print("set differe in:: ",set_diff)
-
-symme_diff=set1^set2
-print("set symmetric is ::",symme_diff)
+print("max vlaue",max(set))
+print("min value",min(set))
