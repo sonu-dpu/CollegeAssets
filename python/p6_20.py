@@ -1,4 +1,7 @@
-sentence = "Python is easy to learn and Python is powerful"
-words=sentence.split()
-occ={occ:words.count(occ)for occ in words}
-print(occ)
+n = int(input("ente a number :: "))
+
+square = {}
+
+for i in range(1, n+1):
+    square[i] = i*i
+print(square)
