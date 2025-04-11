@@ -1,12 +1,8 @@
-# def sumof(n):
-#     return sum(range(n+1))
-# print("sum of number is ",sumof(4))
+data = {'1': ['a', 'b'], 2: ['c', 'd']}
 
-def sum_of(n):
-    total = 0
-    for i in range(n+1):
-        total +=i
-    return total
-n = int(input("enter a number::"))
+list1 = data['1']   # string key
+list2 = data[2]     # integer key
 
-print("sum od number ", sum_of(n))
+for i in list1:
+    for j in list2:
+        print(i + j)

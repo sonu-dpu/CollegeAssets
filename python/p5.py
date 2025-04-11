@@ -1,4 +1,8 @@
-t =(4,2,6.8,1.8,10)
+set1 ={1,2,3,4,5,6}
+set2 ={7,8,9,1,2,3}
 
-sorted_list =tuple(sorted(t))
-print(sorted_list)
+set_diff=set1-set2
+print("set differe in:: ",set_diff)
+
+symme_diff=set1^set2
+print("set symmetric is ::",symme_diff)
