@@ -37,7 +37,9 @@ int main() {
 ```
 
 
-
+```
 practical os : 
 https://chatgpt.com/share/6871f399-a6b8-8008-86f0-4965aa29cd3d
+
 https://chatgpt.com/share/6871f3af-44ac-8008-950e-35d16a6412fe
+```
