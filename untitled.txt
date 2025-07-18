@@ -1,0 +1,289 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <limits.h>
+#include <time.h>
+
+#define IO_WAIT_TIME 2
+
+void calculateTimes(int n, int arrival[], int first_burst[], int process[]) {
+    int second_burst[n], start[n], completion[n], turnaround[n], waiting[n];
+    bool is_completed[n];
+    int current_time = 0, completed = 0;
+    float total_turnaround = 0, total_waiting = 0;
+
+    // Generate random second burst
+    for (int i = 0; i < n; i++) {
+        second_burst[i] = rand() % 6 + 3; // Random burst between 3 and 8
+        is_completed[i] = false;
+    }
+
+    printf("\nGantt Chart:\n");
+
+    while (completed < n) {
+        int idx = -1, min_burst = INT_MAX;
+
+        for (int i = 0; i < n; i++) {
+            if (arrival[i] <= current_time && !is_completed[i]) {
+                if (first_burst[i] < min_burst) {
+                    min_burst = first_burst[i];
+                    idx = i;
+                }
+            }
+        }
+
+        if (idx != -1) {
+            start[idx] = current_time;
+            printf("P%d: %d -> ", process[idx], current_time);
+            current_time += first_burst[idx];
+            printf("%d | IO | ", current_time);
+            current_time += IO_WAIT_TIME;
+            printf("P%d: %d -> ", process[idx], current_time);
+            current_time += second_burst[idx];
+            printf("%d\n", current_time);
+
+            completion[idx] = current_time;
+            turnaround[idx] = completion[idx] - arrival[idx];
+            waiting[idx] = turnaround[idx] - (first_burst[idx] + second_burst[idx] + IO_WAIT_TIME);
+
+            total_turnaround += turnaround[idx];
+            total_waiting += waiting[idx];
+            is_completed[idx] = true;
+            completed++;
+        } else {
+            current_time++; // No process available
+        }
+    }
+
+    printf("\nProcess Table:\n");
+    printf("PID\tAT\tFB\tSB\tCT\tTAT\tWT\n");
+    for (int i = 0; i < n; i++) {
+        printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+               process[i], arrival[i], first_burst[i], second_burst[i],
+               completion[i], turnaround[i], waiting[i]);
+    }
+
+    printf("\nAverage Turnaround Time: %.2f\n", total_turnaround / n);
+    printf("Average Waiting Time: %.2f\n", total_waiting / n);
+}
+
+int main() {
+    int n;
+    srand(time(0)); // Random seed
+
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+
+    int arrival[n], burst[n], process[n];
+
+    for (int i = 0; i < n; i++) {
+        process[i] = i + 1;
+        printf("Enter arrival and first burst time for process P%d: ", i + 1);
+        scanf("%d %d", &arrival[i], &burst[i]);
+    }
+
+    calculateTimes(n, arrival, burst, process);
+    return 0;
+}
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
+
+#define IO_WAIT_TIME 2
+
+typedef struct {
+    int pid;
+    int arrival;
+    int first_burst;
+    int second_burst;
+    int completion;
+    int turnaround;
+    int waiting;
+    bool completed;
+} Process;
+
+void sort_by_arrival(Process p[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (p[j].arrival > p[j+1].arrival) {
+                Process temp = p[j];
+                p[j] = p[j+1];
+                p[j+1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n;
+    srand(time(0)); // Seed for random
+
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    Process p[n];
+
+    for (int i = 0; i < n; i++) {
+        p[i].pid = i + 1;
+        printf("Enter arrival time and first CPU burst for Process P%d: ", i + 1);
+        scanf("%d %d", &p[i].arrival, &p[i].first_burst);
+        p[i].second_burst = rand() % 6 + 3; // Random burst between 3–8
+        p[i].completed = false;
+    }
+
+    sort_by_arrival(p, n);
+
+    int current_time = 0;
+    float total_tat = 0, total_wt = 0;
+
+    printf("\nGantt Chart:\n");
+
+    for (int i = 0; i < n; i++) {
+        if (current_time < p[i].arrival)
+            current_time = p[i].arrival;
+
+        printf("P%d: %d -> ", p[i].pid, current_time);
+        current_time += p[i].first_burst;
+        printf("%d | IO | ", current_time);
+        current_time += IO_WAIT_TIME;
+        printf("P%d: %d -> ", p[i].pid, current_time);
+        current_time += p[i].second_burst;
+        printf("%d\n", current_time);
+
+        p[i].completion = current_time;
+        p[i].turnaround = p[i].completion - p[i].arrival;
+        p[i].waiting = p[i].turnaround - (p[i].first_burst + p[i].second_burst + IO_WAIT_TIME);
+
+        total_tat += p[i].turnaround;
+        total_wt += p[i].waiting;
+    }
+
+    printf("\nProcess Table:\n");
+    printf("PID\tAT\tFB\tSB\tCT\tTAT\tWT\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+            p[i].pid,
+            p[i].arrival,
+            p[i].first_burst,
+            p[i].second_burst,
+            p[i].completion,
+            p[i].turnaround,
+            p[i].waiting);
+    }
+
+    printf("\nAverage Turnaround Time: %.2f\n", total_tat / n);
+    printf("Average Waiting Time: %.2f\n", total_wt / n);
+
+    return 0;
+}
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <limits.h>
+#include <time.h>
+
+#define IO_WAIT_TIME 2
+
+typedef struct {
+    int pid;
+    int arrival;
+    int first_burst;
+    int second_burst;
+    int priority;
+    int completion;
+    int turnaround;
+    int waiting;
+    bool completed;
+} Process;
+
+int main() {
+    int n;
+    srand(time(0));  // Seed for random
+
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+
+    Process p[n];
+
+    for (int i = 0; i < n; i++) {
+        p[i].pid = i + 1;
+        printf("Enter arrival time, first CPU burst and priority for Process P%d: ", p[i].pid);
+        scanf("%d %d %d", &p[i].arrival, &p[i].first_burst, &p[i].priority);
+        p[i].second_burst = rand() % 6 + 3; // Random 3–8
+        p[i].completed = false;
+    }
+
+    int completed_count = 0, current_time = 0;
+    float total_tat = 0, total_wt = 0;
+
+    printf("\nGantt Chart:\n");
+
+    while (completed_count < n) {
+        int idx = -1;
+        int highest_priority = INT_MAX;
+
+        for (int i = 0; i < n; i++) {
+            if (!p[i].completed && p[i].arrival <= current_time) {
+                if (p[i].priority < highest_priority) {
+                    highest_priority = p[i].priority;
+                    idx = i;
+                } else if (p[i].priority == highest_priority) {
+                    // Tie breaker: earlier arrival time
+                    if (p[i].arrival < p[idx].arrival) {
+                        idx = i;
+                    }
+                }
+            }
+        }
+
+        if (idx != -1) {
+            printf("P%d: %d -> ", p[idx].pid, current_time);
+            current_time += p[idx].first_burst;
+            printf("%d | IO | ", current_time);
+            current_time += IO_WAIT_TIME;
+            printf("P%d: %d -> ", p[idx].pid, current_time);
+            current_time += p[idx].second_burst;
+            printf("%d\n", current_time);
+
+            p[idx].completion = current_time;
+            p[idx].turnaround = p[idx].completion - p[idx].arrival;
+            p[idx].waiting = p[idx].turnaround - (p[idx].first_burst + p[idx].second_burst + IO_WAIT_TIME);
+
+            total_tat += p[idx].turnaround;
+            total_wt += p[idx].waiting;
+
+            p[idx].completed = true;
+            completed_count++;
+        } else {
+            current_time++;  // No process ready, idle time
+        }
+    }
+
+    printf("\nProcess Table:\n");
+    printf("PID\tAT\tFB\tSB\tPRIO\tCT\tTAT\tWT\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+            p[i].pid, p[i].arrival, p[i].first_burst,
+            p[i].second_burst, p[i].priority, p[i].completion,
+            p[i].turnaround, p[i].waiting);
+    }
+
+    printf("\nAverage Turnaround Time: %.2f\n", total_tat / n);
+    printf("Average Waiting Time: %.2f\n", total_wt / n);
+
+    return 0;
+}
+
+
+
