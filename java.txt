@@ -1,0 +1,593 @@
+1. Write a program to implement the ArrayList class.
+
+import java.util.ArrayList;
+public class ArrayListExample {
+public static void main(String[] args) {
+ArrayList<String> fruits = new ArrayList<>();
+fruits.add("Apple");
+fruits.add("Banana");
+fruits.add("Cherry");
+fruits.add("Date");
+System.out.println("Fruits: " + fruits);
+String secondFruit = fruits.get(1);
+System.out.println("The second fruit is: " + secondFruit);
+System.out.print("Iterating over fruits: ");
+for (String fruit : fruits) {
+System.out.print(fruit + " ");
+}System.out.println();
+}}
+
+2. Write a program to implement LinkedList class.
+import java.util.*;
+public class LinkedListExample{
+public static void main(String args[]){
+
+LinkedList<String> al=new LinkedList<String>();
+al.add("Ravi");
+al.add("Vijay");
+al.add("Ravi");
+al.add("Ajay");
+Iterator<String> itr=al.iterator();
+while(itr.hasNext()){
+System.out.println(itr.next());
+}
+}
+}
+
+3. Write a program to implement Vector class.
+import java.util.*;
+public class VectorExample {
+public static void main(String args[]) {
+Vector<String> vec = new Vector<String>();
+vec.add("Tiger");
+vec.add("Lion");
+vec.add("Dog");
+
+vec.add("Elephant");
+vec.addElement("Rat");
+vec.addElement("Cat");
+vec.addElement("Deer");
+System.out.println("Elements are: "+vec);
+}
+}
+
+4. Write a program to implement Stack class.
+import java.util.*;
+public class StackExample{
+public static void main(String args[]){
+Stack<String> stack = new Stack<String>();
+stack.push("Ayush");
+stack.push("Garvit");
+stack.push("Amit");
+stack.push("Ashish");
+stack.push("Garima");
+stack.pop();
+Iterator<String> itr=stack.iterator();
+while(itr.hasNext()){
+System.out.println(itr.next());
+}
+}
+}
+
+5. Write a program to implement PriorityQueue class.
+import java.util.*;
+public class TestJavaCollection5{
+public static void main(String args[]){
+PriorityQueue<String> queue=new PriorityQueue<String>();
+queue.add("Amit Sharma");
+queue.add("Vijay Raj");
+queue.add("JaiShankar");
+queue.add("Raj");
+System.out.println("head:"+queue.element());
+System.out.println("head:"+queue.peek());
+System.out.println("iterating the queue elements:");
+Iterator itr=queue.iterator();
+while(itr.hasNext()){
+System.out.println(itr.next());
+}
+queue.remove();
+queue.poll();
+System.out.println("after removing two elements:");
+Iterator<String> itr2=queue.iterator();
+while(itr2.hasNext()){
+System.out.println(itr2.next());
+}
+
+}
+}
+
+6. Write a program to implement ArrayDeque class.
+import java.util.*;
+public class ArrayDequeExample{
+public static void main(String[] args) {
+Deque<String> deque = new ArrayDeque<String>();
+deque.add("Gautam");
+deque.add("Karan");
+deque.add("Ajay");
+for (String str : deque) {
+System.out.println(str);
+}
+}
+}
+7. Write a program to implement HashSet class.
+8. Write a program to implement LinkedHashSet class.
+9. Write a program to implement TreeSet class.
+10. Write a program to implement HashMap class.
+11. Write a program to implement Hashtable class.
+12. Write a program to implement LinkedHashMap class.
+13.Accept n integers from the user and store them in a collection. Display
+them in the sorted order. The collection should not accept duplicate
+elements. (Use a suitable collection). Search for a particular element
+using predefined search method in the Collection framework
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Main {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+Set<Integer> numbers = new TreeSet<>();
+System.out.print("Enter the number of elements: ");
+int n = sc.nextInt();
+System.out.println("Enter " + n + " integers:");
+for (int i = 0; i < n; i++) {
+int number = sc.nextInt();
+numbers.add(number);
+}
+System.out.println("Sorted integers without duplicates: " + numbers);
+System.out.print("Enter the element to search for: ");
+int searchElement = sc.nextInt();
+if (numbers.contains(searchElement)) {
+System.out.println(searchElement + " is present in the collection.");
+} else {
+System.out.println(searchElement + " is not present in the
+collection.");
+}
+sc.close();
+}
+}
+
+14.Create a Hash table containing Employee name and Salary. Display the
+details of the hash table. Also search for a specific Employee and display
+Salary of that Employee.
+import java.util.Hashtable;
+
+import java.util.Scanner;
+public class EmployeeSalary {
+public static void main(String[] args) {
+Hashtable<String, Double> employeeTable = new Hashtable<>();
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter the number of employees: ");
+int n = sc.nextInt();
+for (int i = 0; i < n; i++) {
+System.out.print("Enter Employee Name: ");
+String name = sc.next();
+System.out.print("Enter Salary: ");
+double salary = sc.nextDouble();
+employeeTable.put(name, salary);
+}
+System.out.println("\nEmployee Details:");
+for (String name : employeeTable.keySet()) {
+System.out.println("Employee: " + name + ", Salary: " +
+employeeTable.get(name));
+}
+System.out.print("\nEnter the name of the employee to search for: ");
+String searchName = sc.next();
+if (employeeTable.containsKey(searchName)) {
+System.out.println(searchName + "'s Salary: " +
+employeeTable.get(searchName));
+} else {
+System.out.println(searchName + " is not found in the employee
+table.");
+}
+
+sc.close();
+}
+}
+
+15.Write a java program to accept a number from the user, if number is
+zero then throw user defined exception ―Number is 0, otherwise check
+whether no is prime or not.
+import java.util.Scanner;
+class ZeroNumberException extends Exception {
+public ZeroNumberException(String message) {
+super(message);
+}
+}
+public class PrimeNumberCheck {
+public static boolean isPrime(int number) {
+if (number <= 1) {
+return false;
+}
+for (int i = 2; i <= Math.sqrt(number); i++) {
+if (number % i == 0) {
+return false;
+}
+}
+return true;
+}
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter a number: ");
+int number = sc.nextInt();
+
+try {
+if (number == 0) {
+throw new ZeroNumberException("Number is 0");
+}
+if (isPrime(number)) {
+System.out.println(number + " is a prime number.");
+} else {
+System.out.println(number + " is not a prime number.");
+}
+} catch (ZeroNumberException e) {
+System.out.println("Exception: " + e.getMessage());
+} finally {
+sc.close();
+}
+}
+}
+
+16.Write a java program that displays the number of characters, lines and
+words of a file.
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+public class FileStatsWithFileClass {
+public static void main(String[] args) {
+if (args.length != 1) {
+System.out.println("Usage: java FileStatsWithFileClass
+<filename>");
+return;
+}
+
+File file = new File(args[0]);
+if (!file.exists() || !file.isFile()) {
+System.out.println("File does not exist or is not a valid file.");
+return;
+}
+int lines = 0;
+int words = 0;
+int characters = 0;
+try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+String line;
+while ((line = br.readLine()) != null) {
+lines++;
+characters += line.length();
+String[] wordArray = line.trim().split("\\s+");
+if (line.trim().length() > 0) {
+words += wordArray.length;
+}
+}
+} catch (IOException e) {
+System.out.println("Error reading the file: " + e.getMessage());
+}
+System.out.println("File: " + file.getName());
+System.out.println("Number of lines: " + lines);
+System.out.println("Number of words: " + words);
+System.out.println("Number of characters: " + characters);
+}
+}
+
+17. Construct a linked List containing names of colours: red, blue, yellow
+and orange. Then extend your program to do the following: i. Display
+the contents of the List using an Iterator ii. Display the contents of the
+List in reverse order using a ListIterator iii. Create another list
+containing pink and green. Insert the elements of this list between blue
+and yellow.
+import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.ListIterator;
+public class ColourLinkedList {
+public static void main(String[] args) {
+LinkedList<String> colours = new LinkedList<>();
+colours.add("red");
+colours.add("blue");
+colours.add("yellow");
+colours.add("orange");
+System.out.println("List of colours using Iterator:");
+Iterator<String> iterator = colours.iterator();
+while (iterator.hasNext()) {
+System.out.println(iterator.next());
+}
+System.out.println("\nList of colours in reverse order using
+ListIterator:");
+ListIterator<String> listIterator = colours.listIterator(colours.size());
+while (listIterator.hasPrevious()) {
+System.out.println(listIterator.previous());
+}
+
+LinkedList<String> newColours = new LinkedList<>();
+newColours.add("pink");
+newColours.add("green");
+int index = colours.indexOf("blue") + 1;
+colours.addAll(index, newColours);
+System.out.println("\nUpdated list after inserting 'pink' and 'green'
+between 'blue' and 'yellow':");
+for (String colour : colours) {
+System.out.println(colour);
+}
+}
+}
+
+18. Write a java program to accept Doctor Name from the user and check
+whether it is valid or not. (It should not contain digits and special
+symbol) If it is not valid then throw user defined Exception - Name is
+Invalid -- otherwise display it.
+import java.util.Scanner;
+class InvalidNameException extends Exception {
+public InvalidNameException(String message) {
+super(message);
+}
+}
+public class DoctorNameValidation {
+public static void validateDoctorName(String name) throws
+InvalidNameException {
+if (!name.matches("[a-zA-Z ]+")) {
+throw new InvalidNameException("Name is Invalid");
+}
+}
+
+public static void main(String[] args) {
+Scanner sc= new Scanner(System.in);
+System.out.print("Enter Doctor's Name: ");
+String doctorName = sc.nextLine();
+try {
+validateDoctorName(doctorName);
+System.out.println("Doctor's Name is: " + doctorName);
+} catch (InvalidNameException e) {
+System.out.println("Exception: " + e.getMessage());
+} finally {
+sc.close();
+}
+}
+}
+
+19.Write a java program to accept details of n customers (c_id, cname,
+address, mobile_no) from user and store it in a file (Use
+DataOutputStream class). Display the details of customers by reading it
+from file.(Use DataInputStream class)
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Scanner;
+public class CustomerDetails {
+public static void writeCustomerDetails(String fileName, int n) {
+
+try (DataOutputStream dos = new DataOutputStream(new
+FileOutputStream(fileName));
+Scanner scanner = new Scanner(System.in)) {
+for (int i = 0; i < n; i++) {
+System.out.println("Enter details for Customer " + (i + 1) + ":");
+System.out.print("Customer ID: ");
+int c_id = scanner.nextInt();
+scanner.nextLine();
+System.out.print("Customer Name: ");
+String cname = scanner.nextLine();
+System.out.print("Address: ");
+String address = scanner.nextLine();
+System.out.print("Mobile Number: ");
+String mobile_no = scanner.nextLine();
+dos.writeInt(c_id);
+dos.writeUTF(cname);
+dos.writeUTF(address);
+dos.writeUTF(mobile_no);
+}
+System.out.println("Customer details saved to the file.");
+} catch (IOException e) {
+System.out.println("Error writing to file: " + e.getMessage());
+}
+}
+public static void readCustomerDetails(String fileName) {
+try (DataInputStream dis = new DataInputStream(new
+FileInputStream(fileName))) {
+System.out.println("\nCustomer Details from File:");
+while (dis.available() > 0) {
+int c_id = dis.readInt();
+String cname = dis.readUTF();
+String address = dis.readUTF();
+String mobile_no = dis.readUTF();
+
+System.out.println("\nCustomer ID: " + c_id);
+System.out.println("Customer Name: " + cname);
+System.out.println("Address: " + address);
+System.out.println("Mobile Number: " + mobile_no);
+}
+} catch (IOException e) {
+System.out.println("Error reading from file: " + e.getMessage());
+}
+}
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter the number of customers: ");
+int n = sc.nextInt();
+String fileName = "customers.dat";
+writeCustomerDetails(fileName, n);
+readCustomerDetails(fileName);
+sc.close();
+}
+}
+
+
+
+
+
+
+os:-
+  Write the simulation program using SJF (non-preemptive). The arrival time and first CPU
+bursts of different jobs should be input to the system. Assume the fixed I/O waiting
+time (2 units). The next CPU burstshould be generated using random function. The output
+should give the Gantt chart, Turnaround Time and Waiting time for each process and
+average times.
+#include <stdio.h> #include <stdlib.h>
+#include <stdbool.h> #include <limits.h>
+#include <time.h> #define IO_WAIT_TIME 2
+void calculateTimes(int n, int arrival[], int burst[], int process[]) {
+int completion[n], turnaround[n], waiting[n], current_time = 0, completed = 0;
+bool is_completed[n];
+float total_turnaround = 0, total_waiting = 0;
+for (int i = 0; i < n; i++) is_completed[i] = false;
+printf("\nGantt Chart: ");
+while (completed < n) {
+int idx = -1, min_burst = INT_MAX;
+for (int i = 0; i < n; i++) {
+if (arrival[i] <= current_time && !is_completed[i] && burst[i] < min_burst) {
+min_burst = burst[i];
+idx = i;
+}
+}
+if (idx != -1) {
+printf("P%d(%d-%d) ", process[idx], current_time, current_time + burst[idx]);
+
+current_time += burst[idx];
+completion[idx] = current_time;
+turnaround[idx] = completion[idx] - arrival[idx];
+waiting[idx] = turnaround[idx] - burst[idx];
+total_turnaround += turnaround[idx];
+total_waiting += waiting[idx];
+is_completed[idx] = true;
+completed++;
+current_time += IO_WAIT_TIME + (rand() % 10 + 1);// I/O wait + next burst
+} else {
+current_time++; // No process available, increment time
+}
+}
+printf("\n\nProcess\tArrival\tBurst\tCompletion\tTurnaround\tWaiting\n");
+for (int i = 0; i < n; i++) {
+printf("P%d\t%d\t%d\t%d\t\t%d\t\t%d\n", process[i], arrival[i], burst[i],
+completion[i], turnaround[i], waiting[i]);
+}
+printf("\nAverage Turnaround Time: %.2f",total_turnaround / n);
+printf("\nAverage Waiting Time: %.2f\n", total_waiting / n);
+}
+int main() {
+int n;
+srand(time(0));// Seed random number generator
+printf("Enter the number of processes: ");
+scanf("%d", &n);
+int arrival[n], burst[n], process[n];
+for (int i = 0; i < n; i++) {
+process[i] = i + 1;
+printf("Enter arrival and burst time for process P%d: ", i + 1);
+scanf("%d %d", &arrival[i], &burst[i]);
+}
+calculateTimes(n, arrival, burst, process);
+return 0;
+}
+
+Q Write the simulation program using FCFS. The arrival time and first CPU bursts of
+different jobs should be input to the system. Assume the fixed I/O waiting time (2 units).
+The next CPU burst should be generated using random function. The output should give
+the Gantt chart, Turnaround Time and Waiting time for each process and average times.
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+void calculateTimes(int n, int arrival_time[], int burst_time[], int io_wait_time) {
+int completion_time[n], turnaround_time[n], waiting_time[n];
+int current_time = 0;
+float total_turnaround_time = 0, total_waiting_time = 0;
+printf("\nGantt Chart: ");
+for (int i = 0; i < n; i++) {
+if (current_time < arrival_time[i]) {
+current_time = arrival_time[i];
+}
+printf("P%d(%d-%d) ", i + 1, current_time, current_time + burst_time[i]);
+
+current_time += burst_time[i];
+completion_time[i] = current_time;
+current_time += io_wait_time;
+turnaround_time[i] = completion_time[i] - arrival_time[i];
+waiting_time[i] = turnaround_time[i] - burst_time[i];
+total_turnaround_time += turnaround_time[i];
+total_waiting_time += waiting_time[i];
+}
+printf("\n\nProcess\tArrival\tBurst\tCompletion\tTurnaround\tWaiting\n");
+for (int i = 0; i < n; i++) {
+printf("P%d\t%d\t%d\t%d\t\t%d\t\t%d\n", i + 1, arrival_time[i], burst_time[i],
+completion_time[i], turnaround_time[i], waiting_time[i]);
+}
+printf("\nAverage Turnaround Time: %.2f",total_turnaround_time / n);
+printf("\nAverage Waiting Time: %.2f\n", total_waiting_time / n);
+}
+int main() {
+int n, io_wait_time = 2;
+srand(time(0));
+printf("Enter the number of processes: ");
+scanf("%d", &n);
+int *arrival_time = (int *)malloc(n * sizeof(int));
+int *burst_time = (int *)malloc(n * sizeof(int));
+for (int i = 0; i < n; i++) {
+printf("Enter arrival time for process %d: ", i + 1);
+scanf("%d", &arrival_time[i]);
+printf("Enter first CPU burst time for process %d: ", i + 1);
+scanf("%d", &burst_time[i]);
+}
+calculateTimes(n, arrival_time, burst_time, io_wait_time);
+free(arrival_time);
+free(burst_time);
+return 0;
+}
+
+Q. Write the program to simulate Non-preemptive Priority scheduling. The arrival time
+and first CPU burst and priority for different n number of processes should be input to
+the algorithm. Assume the fixed IO waiting time (2 units). The next CPU-burst should
+be generated randomly. The output should give Gantt chart, turnaround time and
+waiting time for each process. Also find the average waiting time and turnaround
+time..
+#include <stdio.h> #include <stdlib.h>
+#include <stdbool.h> #include <limits.h>
+#include <time.h> #define IO_WAIT_TIME 2
+void calculateTimes(int n, int arrival[], int burst[], int priority[], int process[]) {
+int completion[n], turnaround[n], waiting[n], current_time = 0, completed = 0;
+bool is_completed[n];
+float total_turnaround = 0, total_waiting = 0;
+for (int i = 0; i < n; i++) is_completed[i] = false;
+printf("\nGantt Chart: ");
+while (completed < n) {
+int idx = -1, highest_priority = INT_MAX;
+for (int i = 0; i < n; i++) {
+if (arrival[i] <= current_time && !is_completed[i] && priority[i] < highest_priority) {
+highest_priority = priority[i];
+idx = i;
+}
+}
+
+if (idx != -1) {
+printf("P%d(%d-%d) ", process[idx], current_time, current_time + burst[idx]);
+current_time += burst[idx];
+completion[idx] = current_time;
+turnaround[idx] = completion[idx] - arrival[idx];
+waiting[idx] = turnaround[idx] - burst[idx];
+total_turnaround += turnaround[idx];
+total_waiting += waiting[idx];
+is_completed[idx] = true;
+completed++;
+current_time += IO_WAIT_TIME + (rand() % 10 + 1); // I/O wait + random next burst
+} else {
+current_time++; // No process available, increment time
+}
+}
+printf("\n\nProcess\tArrival\tBurst\tPriority\tTurnaround\tWaiting\n");
+for (int i = 0; i < n; i++) {
+printf("P%d\t%d\t%d\t%d\t\t%d\t\t%d\n", process[i], arrival[i], burst[i],
+priority[i], turnaround[i], waiting[i]);
+}
+printf("\nAverage Turnaround Time: %.2f\n",total_turnaround / n);
+printf("Average Waiting Time: %.2f\n", total_waiting / n);
+}
+int main() {
+int n;
+srand(time(0));// Seed random number generator
+printf("Enter the number of processes: ");
+scanf("%d", &n);
+int arrival[n], burst[n], priority[n], process[n];
+for (int i = 0; i < n; i++) {
+process[i] = i + 1;
+printf("Enter arrival time, burst time, and priority for process P%d: ", i + 1);
+scanf("%d %d %d", &arrival[i], &burst[i], &priority[i]);
+}
+calculateTimes(n, arrival, burst, priority, process);
+return 0;
