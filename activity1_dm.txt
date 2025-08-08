@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+# 1. Generate and Preprocess Data
+# Dataset Reference: Synthetic User Data
+# Features: AnnualIncome (k$) and SpendingScore (1-100)
+
+np.random.seed(42)  # for reproducibility
+data = {
+    'AnnualIncome': np.random.randint(20, 150, 200),
+    'SpendingScore': np.random.randint(1, 100, 200)
+}
+df = pd.DataFrame(data)
+
+# Preprocessing: Scale the data
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(df[['AnnualIncome', 'SpendingScore']])
+
+# 2. Application of K-Means Clustering
+# Determine the number of clusters (k) using the Elbow Method (for this example, we'll choose k=4)
+k = 4
+kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+clusters = kmeans.fit_predict(scaled_features)
+
+# Add the cluster labels to the original DataFrame
+df['Cluster'] = clusters
+
+# Get the scaled centroids and inverse transform them for plotting on the original scale
+centroids = scaler.inverse_transform(kmeans.cluster_centers_)
+
+# 3. Visualization with Matplotlib
+plt.figure(figsize=(10, 6))
+
+# Define colors for each cluster
+colors = ['red', 'blue', 'green', 'purple']
+labels = [f'Cluster {i+1}' for i in range(k)]
+
+# Plot each cluster
+for i in range(k):
+    plt.scatter(df[df['Cluster'] == i]['AnnualIncome'],
+                df[df['Cluster'] == i]['SpendingScore'],
+                s=100, c=colors[i], label=labels[i])
+
+# Plot the centroids
+plt.scatter(centroids[:, 0], centroids[:, 1], s=300, c='yellow', marker='*', label='Centroids')
+
+# Add labels and title
+plt.title(f'K-Means Clustering with {k} Clusters', fontsize=20)
+plt.xlabel('Annual Income (k$)')
+plt.ylabel('Spending Score (1-100)')
+plt.legend()
+plt.grid(True)
+plt.show()
