@@ -62,3 +62,46 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 print("Training set size:", X_train.shape)
 print("Testing set size:", X_test.shape)
 ```
+
+
+Java Pract Assign 5 Question 2 Corrected Version
+
+```java
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ResultSetInfo {
+    public static void main(String[] args) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection con = DriverManager.getConnection("jdbc:postgresql:DYP", "postgres", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Person");
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+            System.out.println("Number of Columns: " + columnCount);
+            System.out.println("Column Details:");
+            for (int i = 1; i <= columnCount; i++) {
+                System.out.println("Name: " + rsmd.getColumnName(i) +
+                                   ", Type: " + rsmd.getColumnTypeName(i));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+        } catch (ClassNotFoundException e) {
+            System.out.println("PostgreSQL JDBC Driver not found.");
+            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+```
