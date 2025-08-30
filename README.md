@@ -105,3 +105,36 @@ public class ResultSetInfo {
 }
 
 ```
+
+
+
+```java
+import java.sql.*;
+
+public class CountriesInWestRegion {
+    public static void main(String[] args) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection con = DriverManager.getConnection("jdbc:postgresql:DYP", "postgres", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Country WHERE Region = 'West'");
+
+            while (rs.next()) {
+                System.out.println("Name: " + rs.getString("Name") +
+                                   ", Continent: " + rs.getString("Continent") +
+                                   ", Capital: " + rs.getString("Capital") +
+                                   ", Region: " + rs.getString("Region"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+        } catch (ClassNotFoundException e) {
+            System.out.println("PostgreSQL JDBC Driver not found.");
+            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+```
