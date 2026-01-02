@@ -1,0 +1,846 @@
+1. Create a Simple Application which shows the Life Cycle of Activity.
+package com.example.activitylifecycle;
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private static final String TAG = "ActivityLifecycle";
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ Log.d(TAG, "onCreate called");
+ }
+ @Override
+ protected void onStart() {
+ super.onStart();
+ Log.d(TAG, "onStart called");
+ }
+ @Override
+ protected void onResume() {
+ super.onResume();
+ Log.d(TAG, "onResume called");
+ }
+ @Override
+ protected void onPause() {
+ super.onPause();
+ Log.d(TAG, "onPause called");
+ }
+ @Override
+ protected void onStop() {
+ super.onStop();
+ Log.d(TAG, "onStop called");
+ }
+ @Override
+ protected void onRestart() {
+ super.onRestart();
+ Log.d(TAG, "onRestart called");
+ }
+ @Override
+ protected void onDestroy() {
+ super.onDestroy();
+ Log.d(TAG, "onDestroy called");
+ }
+}
+2. Create a simple application to explain use of Explicit Intent.
+XML
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <Button
+ android:id="@+id/button"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Open"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ android:layout_marginTop="100dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+Java
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private Button b;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ b= findViewById(R.id.button);
+ b.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+
+ Intent i= new Intent(MainActivity.this, SecondActivity.class);
+ startActivity(i);
+ }
+ });
+ }
+}
+3. Create a simple application to explain use of Implicit Intent.
+XML
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <Button
+ android:id="@+id/button"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Open"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ android:layout_marginTop="100dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+Java
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private Button b;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ b= findViewById(R.id.button);
+ b.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+
+Intent i= new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+ startActivity(i);
+ }
+ });
+ }
+}
+4. Create android application to accept name from user and display it on next activity
+using Intent.
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ android:padding="16dp">
+ <EditText
+ android:id="@+id/editTextName"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Enter your name"
+ android:inputType="textPersonName" />
+ <Button
+ android:id="@+id/buttonSubmit"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="Submit" />
+</LinearLayout>
+MainActivity.java
+package com.example.namepass;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private EditText editTextName;
+ private Button buttonSubmit;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ editTextName = findViewById(R.id.editTextName);
+ buttonSubmit = findViewById(R.id.buttonSubmit);
+ buttonSubmit.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String name = editTextName.getText().toString();
+ Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+ intent.putExtra("USER_NAME", name);
+ startActivity(intent);
+ }
+ });
+ }
+}
+Activity_second.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ android:padding="16dp"
+ android:gravity="center">
+ <TextView
+ android:id="@+id/textViewName"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Hello, user!"
+ android:textSize="20sp" />
+</LinearLayout>
+SecondActivity.java
+package com.example.namepass;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class SecondActivity extends AppCompatActivity {
+ private TextView textViewName;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_second);
+ textViewName = findViewById(R.id.textViewName);
+ String name = getIntent().getStringExtra("USER_NAME");
+ textViewName.setText("Hello, " + name);
+
+ }
+}
+5. Create android application to accept name from user and display it using Toast.
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ android:padding="16dp"
+ android:gravity="center">
+ <!-- EditText to enter the name -->
+ <EditText
+ android:id="@+id/editTextName"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Enter your name"
+ android:inputType="textPersonName" />
+ <!-- Button to submit the name -->
+ <Button
+ android:id="@+id/buttonSubmit"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Submit" />
+</LinearLayout>
+MainActivity.java
+package com.example.namewithtoast;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private EditText editTextName;
+ private Button buttonSubmit;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ editTextName = findViewById(R.id.editTextName);
+ buttonSubmit = findViewById(R.id.buttonSubmit);
+ buttonSubmit.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String name = editTextName.getText().toString();
+ Toast.makeText(MainActivity.this, "Hello, " + name, Toast.LENGTH_SHORT).show();
+ } }
+ });
+ }
+}
+6. Create a Simple Application Which Send ―Hello! message from one activity to
+another with help of Button (Use Intent).
+XML
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <!-- Button to send message -->
+ <Button
+ android:id="@+id/sendMessageButton"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Send Message"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ android:layout_marginTop="100dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+Java
+package com.example.hellomessage;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private Button sendMessageButton;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ sendMessageButton = findViewById(R.id.sendMessageButton);
+ sendMessageButton.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+
+ intent.putExtra("message", "Hello!");
+
+ startActivity(intent);
+ }
+ });
+ }
+}
+SecondActivity.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".SecondActivity">
+ <!-- TextView to display the received message -->
+ <TextView
+ android:id="@+id/messageTextView"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Message will appear here"
+ android:textSize="20sp"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ android:layout_marginTop="100dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+SecondActivity.java
+package com.example.hellomessage;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class SecondActivity extends AppCompatActivity {
+ private TextView messageTextView;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_second);
+ messageTextView = findViewById(R.id.messageTextView);
+ String message = getIntent().getStringExtra("message");
+ messageTextView.setText(message);
+ }
+}
+7. Create an Android App with Login Screen. On successful login, gives message go to
+next Activity (Without Using Database).
+Activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ android:padding="16dp"
+ android:gravity="center">
+ <!-- EditText for username input -->
+ <EditText
+ android:id="@+id/editTextUsername"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Username"
+ android:inputType="textPersonName" />
+ <!-- EditText for password input -->
+ <EditText
+ android:id="@+id/editTextPassword"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:hint="Password"
+ android:inputType="textPassword" />
+ <!-- Login Button -->
+ <Button
+ android:id="@+id/buttonLogin"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Login" />
+</LinearLayout>
+MainActivity.java
+package com.example.loginapp;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ private EditText editTextUsername;
+ private EditText editTextPassword;
+ private Button buttonLogin;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ editTextUsername = findViewById(R.id.editTextUsername);
+ editTextPassword = findViewById(R.id.editTextPassword);
+ buttonLogin = findViewById(R.id.buttonLogin);
+ buttonLogin.setOnClickListener(new View.OnClickListener() {
+ @Override
+ public void onClick(View v) {
+ String username = editTextUsername.getText().toString();
+ String password = editTextPassword.getText().toString();
+ if (username.equals(“admin”) && password.equals(“1234”)) {
+Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+ Intent intent = new Intent(MainActivity.this, NextActivity.class);
+ startActivity(intent);
+ } else {
+Toast.makeText(MainActivity.this, "Invalid Username or Password",
+Toast.LENGTH_SHORT).show();
+ }
+ }
+ });
+ }
+}
+SecondActivity.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ android:padding="16dp"
+ android:gravity="center">
+ <!-- TextView that displays a message -->
+ <TextView
+ android:id="@+id/textViewMessage"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Welcome to the next activity!"
+ android:textSize="18sp" />
+</LinearLayout>
+SecondActivity.java
+package com.example.loginapp;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class NextActivity extends AppCompatActivity {
+ private TextView textViewMessage;
+ @Override
+ protected void onCreate(Bundle savedInstanceState) {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_next);
+ textViewMessage = findViewById(R.id.textViewMessage);
+ textViewMessage.setText("Welcome to second activity!");
+ }
+}
+8. Create First Activity to accept information like Student First Name, Middle Name,
+Last Name, Date of birth, Address, Email ID and display all information on Second
+Activity when user click on Submit button.
+activity_main.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:orientation="vertical"
+ android:padding="16dp"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <EditText android:id="@+id/etFn" android:hint="First Name"/>
+ <EditText android:id="@+id/etMn" android:hint="Middle Name"/>
+ <EditText android:id="@+id/etLn" android:hint="Last Name"/>
+ <EditText android:id="@+id/etDob" android:hint="Date of Birth"/>
+ <EditText android:id="@+id/etAdd" android:hint="Address"/>
+ <EditText android:id="@+id/etMail" android:hint="Email ID"/>
+ <Button
+ android:text="Submit"
+ android:onClick="submit"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"/>
+</LinearLayout>
+MainActivity.java
+package com.example.studentapp;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ EditText fn, mn, ln, dob, add, mail;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_main);
+ fn = findViewById(R.id.etFn);
+ mn = findViewById(R.id.etMn);
+ ln = findViewById(R.id.etLn);
+ dob = findViewById(R.id.etDob);
+ add = findViewById(R.id.etAdd);
+ mail = findViewById(R.id.etMail);
+ }
+ public void submit(View v) {
+ Intent i = new Intent(this, SecondActivity.class);
+ i.putExtra("fn", fn.getText().toString());
+ i.putExtra("mn", mn.getText().toString());
+ i.putExtra("ln", ln.getText().toString());
+ i.putExtra("dob", dob.getText().toString());
+ i.putExtra("add", add.getText().toString());
+ i.putExtra("mail", mail.getText().toString());
+ startActivity(i);
+ }
+}
+activity_second.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:padding="16dp"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <TextView
+ android:id="@+id/tvData"
+ android:textSize="16sp"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"/>
+</LinearLayout>
+SecondActivity.java
+package com.example.studentapp;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class SecondActivity extends AppCompatActivity {
+ TextView tv;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_second);
+ tv = findViewById(R.id.tvData);
+ String s =
+ "First Name: " + getIntent().getStringExtra("fn") + "\n" +
+ "Middle Name: " + getIntent().getStringExtra("mn") + "\n" +
+ "Last Name: " + getIntent().getStringExtra("ln") + "\n" +
+ "DOB: " + getIntent().getStringExtra("dob") + "\n" +
+ "Address: " + getIntent().getStringExtra("add") + "\n" +
+ "Email: " + getIntent().getStringExtra("mail");
+ tv.setText(s);
+ }
+}
+9. Create a Simple Application, which reads a positive number from the user and
+display its factorial value in another activity.
+activity_main.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:orientation="vertical"
+ android:padding="16dp"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <EditText
+ android:id="@+id/etNum"
+ android:hint="Enter Positive Number"
+ android:inputType="number"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"/>
+ <Button
+ android:text="Find Factorial"
+ android:onClick="calc"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"/>
+</LinearLayout>
+MainActivity.java
+package com.example.factapp;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ EditText n;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_main);
+ n = findViewById(R.id.etNum);
+ }
+ public void calc(View v) {
+ int num = Integer.parseInt(n.getText().toString());
+ Intent i = new Intent(this, SecondActivity.class);
+ i.putExtra("num", num);
+ startActivity(i);
+ }
+}
+activity_second.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:padding="16dp"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <TextView
+ android:id="@+id/tvRes"
+ android:textSize="18sp"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"/>
+</LinearLayout>
+SecondActivity.java
+package com.example.factapp;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class SecondActivity extends AppCompatActivity {
+ TextView tv;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_second);
+ tv = findViewById(R.id.tvRes);
+ int n = getIntent().getIntExtra("num", 0);
+ long f = 1;
+ for (int i = 1; i <= n; i++) {
+ f = f * i;
+ }
+ tv.setText("Factorial = " + f);
+ }
+}
+10. Create an Android Application that will change color of the College Name on click
+of Push Button and change the font size, font style of text view using xml.
+activity_main.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:orientation="vertical"
+ android:gravity="center"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <TextView
+ android:id="@+id/tvClg"
+ android:text="ABC College of Engineering"
+ android:textSize="24sp"
+ android:textStyle="bold|italic"
+ android:textColor="@android:color/black"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"/>
+ <Button
+ android:id="@+id/btn"
+ android:text="Change Color"
+ android:onClick="chg"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_marginTop="20dp"/>
+</LinearLayout>
+MainActivity.java
+package com.example.collegeapp;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+TextView tv;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_main);
+ tv = findViewById(R.id.tvClg);
+ }
+ public void chg(View v) {
+tv.setTextColor(Color.RED);
+ tv.setTextSize(30);
+ tv.setTypeface(null, Typeface.BOLD_ITALIC); }
+}
+11. Create a Simple Application, that performs Arithmetic Operations. (Use constraint
+layout)
+activity_main.xml
+<androidx.constraintlayout.widget.ConstraintLayout
+ xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <EditText
+ android:id="@+id/et1"
+ android:hint="Number 1"
+ android:inputType="number"
+ android:layout_width="0dp"
+ android:layout_height="wrap_content"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ android:layout_margin="16dp"/>
+ <EditText
+ android:id="@+id/et2"
+ android:hint="Number 2"
+ android:inputType="number"
+ android:layout_width="0dp"
+ android:layout_height="wrap_content"
+ app:layout_constraintTop_toBottomOf="@id/et1"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ android:layout_margin="16dp"/>
+ <Button
+ android:text="Add"
+ android:onClick="add"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ app:layout_constraintTop_toBottomOf="@id/et2"
+ app:layout_constraintStart_toStartOf="parent"/>
+ <Button
+ android:text="Sub"
+ android:onClick="sub"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ app:layout_constraintTop_toBottomOf="@id/et2"
+ app:layout_constraintEnd_toEndOf="parent"/>
+ <Button
+ android:text="Mul"
+ android:onClick="mul"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ app:layout_constraintTop_toBottomOf="@id/btnAdd"
+ app:layout_constraintStart_toStartOf="parent"/>
+ <Button
+ android:text="Div"
+ android:onClick="div"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ app:layout_constraintTop_toBottomOf="@id/btnSub"
+ app:layout_constraintEnd_toEndOf="parent"/>
+ <TextView
+ android:id="@+id/tvRes"
+ android:text="Result"
+ android:textSize="18sp"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ app:layout_constraintTop_toBottomOf="@id/et2"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+MainActivity.java
+package com.example.calcapp;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ EditText n1, n2;
+ TextView tv;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_main);
+ n1 = findViewById(R.id.et1);
+ n2 = findViewById(R.id.et2);
+ tv = findViewById(R.id.tvRes);
+ }
+ public void add(View v) {
+ int a = Integer.parseInt(n1.getText().toString());
+ int b1 = Integer.parseInt(n2.getText().toString());
+ tv.setText("Result = " + (a + b1));
+ }
+ public void sub(View v) {
+ int a = Integer.parseInt(n1.getText().toString());
+ int b1 = Integer.parseInt(n2.getText().toString());
+ tv.setText("Result = " + (a - b1));
+ }
+ public void mul(View v) {
+ int a = Integer.parseInt(n1.getText().toString());
+ int b1 = Integer.parseInt(n2.getText().toString());
+ tv.setText("Result = " + (a * b1));
+ }
+ public void div(View v) {
+ int a = Integer.parseInt(n1.getText().toString());
+ int b1 = Integer.parseInt(n2.getText().toString());
+ tv.setText("Result = " + (a / b1));
+ }
+}
+12. Create an Android Application to accept two numbers and find power and Average.
+Display the result on the next activity on Button click.
+activity_main.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:orientation="vertical"
+ android:padding="16dp"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <EditText
+ android:id="@+id/et1"
+ android:hint="Enter Number 1"
+ android:inputType="number"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"/>
+ <EditText
+ android:id="@+id/et2"
+ android:hint="Enter Number 2"
+ android:inputType="number"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"/>
+ <Button
+ android:text="Calculate"
+ android:onClick="cal"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"/>
+</LinearLayout>
+MainActivity.java
+package com.example.poweravg;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity {
+ EditText n1, n2;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_main);
+ n1 = findViewById(R.id.et1);
+ n2 = findViewById(R.id.et2);
+ }
+ public void cal(View v) {
+ int a = Integer.parseInt(n1.getText().toString());
+ int b1 = Integer.parseInt(n2.getText().toString());
+ Intent i = new Intent(this, SecondActivity.class);
+ i.putExtra("a", a);
+ i.putExtra("b", b1);
+ startActivity(i);
+ }
+}
+activity_second.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:padding="16dp"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+ <TextView
+ android:id="@+id/tvRes"
+ android:textSize="18sp"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"/>
+</LinearLayout>
+SecondActivity.java
+package com.example.poweravg;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class SecondActivity extends AppCompatActivity {
+ TextView tv;
+ @Override
+ protected void onCreate(Bundle b) {
+ super.onCreate(b);
+ setContentView(R.layout.activity_second);
+ tv = findViewById(R.id.tvRes);
+ int a = getIntent().getIntExtra("a", 0);
+ int b1 = getIntent().getIntExtra("b", 0);
+ double p = Math.pow(a, b1);
+ double avg = (a + b1) / 2.0;
+ tv.setText("Power = " + p + "\nAverage = " + avg);
+ }
+}
+13. Create a Simple Application, which reads a positive number from the user and
+check whether it is even or odd.(Use Toast)
+14. Create a Simple Application, which reads a positive number from the user and
+display its reverse value in another activity.
+15. Write an Android application to accept two numbers from the user, and display
+them, but reject input if both numbers are greater than 10 and asks for two new
+numbers.
+16. Create an Android App, it reads the Students Details (Name, Surname, Class,
+Gender, Hobbies, Marks) and display the all information in another activity in table
+format on click of Submit button.
