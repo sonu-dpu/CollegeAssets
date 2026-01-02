@@ -1,0 +1,242 @@
+
+# Practical Assignment 2
+
+1.	Write a program in the GO language using function to check whether accepts number is palindrome or not.
+Ans:- package main
+
+import "fmt"
+
+// Function to check palindrome
+func isPalindrome(num int) bool {
+	original := num
+	reverse := 0
+
+	for num > 0 {
+		remainder := num % 10
+		reverse = reverse*10 + remainder
+		num = num / 10
+	}
+
+	return original == reverse
+}
+
+func main() {
+	var n int
+
+	fmt.Print("Enter a number: ")
+	fmt.Scan(&n)
+
+	if isPalindrome(n) {
+		fmt.Println("The number is a palindrome.")
+	} else {
+		fmt.Println("The number is not a palindrome.")
+	}
+}
+
+2.	Write a program in GO language to print a recursive sum of digits of a given number.
+Ans:- package main
+
+import "fmt"
+
+// Recursive function to find sum of digits
+func sumOfDigits(n int) int {
+	if n == 0 {
+		return 0
+	}
+	return (n % 10) + sumOfDigits(n/10)
+}
+
+func main() {
+	var num int
+
+	fmt.Print("Enter a number: ")
+	fmt.Scan(&num)
+
+	result := sumOfDigits(num)
+	fmt.Println("Sum of digits =", result)
+}
+
+3.	Write a program in GO language to demonstrate function return multiple values.
+Ans:- package main
+import "fmt"
+
+// Function returning multiple values
+func calculate(a int, b int) (int, int, int) {
+	sum := a + b
+	diff := a - b
+	product := a * b
+	return sum, diff, product
+}
+
+func main() {
+	var x, y int
+
+	fmt.Print("Enter two numbers: ")
+	fmt.Scan(&x, &y)
+
+	s, d, p := calculate(x, y)
+
+	fmt.Println("Sum =", s)
+	fmt.Println("Difference =", d)
+	fmt.Println("Product =", p)
+}
+
+4.	Write a program in GO language to illustrate the concept of returning multiple values from a function. ( Add, Subtract, Multiply, Divide)
+Ans:- package main
+import "fmt"
+// Function returning multiple values
+func calculate(a int, b int) (int, int, int, float64) {
+	add := a + b
+	sub := a - b
+	mul := a * b
+
+	var div float64
+	if b != 0 {
+		div = float64(a) / float64(b)
+	} else {
+		div = 0
+	}
+
+	return add, sub, mul, div
+}
+
+func main() {
+	var x, y int
+
+	fmt.Print("Enter two numbers: ")
+	fmt.Scan(&x, &y)
+
+	add, sub, mul, div := calculate(x, y)
+
+	fmt.Println("Addition =", add)
+	fmt.Println("Subtraction =", sub)
+	fmt.Println("Multiplication =", mul)
+
+	if y != 0 {
+		fmt.Println("Division =", div)
+	} else {
+		fmt.Println("Division not possible (division by zero).")
+	}
+}
+5.	Write a program in GO language to print a multiplication table of number using function.
+Ans:- package main
+
+import "fmt"
+
+// Function to print multiplication table
+func printTable(n int) {
+	for i := 1; i <= 10; i++ {
+		fmt.Printf("%d x %d = %d\n", n, i, n*i)
+	}
+}
+
+func main() {
+	var num int
+
+	fmt.Print("Enter a number: ")
+	fmt.Scan(&num)
+
+	printTable(num)
+}
+
+6.	Write a program in GO language to illustrate the function returning multiple values (add, subtract).
+Ans:-  package main
+import "fmt"
+// Function returning multiple values
+func addSub(a int, b int) (int, int) {
+add := a + b
+sub := a - b
+return add, sub
+}
+
+func main() {
+var x, y int
+
+fmt.Print("Enter two numbers: ")
+fmt.Scan(&x, &y)
+
+sum, diff := addSub(x, y)
+
+fmt.Println("Addition =", sum)
+fmt.Println("Subtraction =", diff)
+}
+7.	WAP in go language to swap two numbers using call by reference concept.
+Ans:-  package main
+
+import "fmt"
+
+// Function to swap two numbers using pointers
+func swap(a *int, b *int) {
+temp := *a
+*a = *b
+*b = temp
+}
+
+func main() {
+var x, y int
+
+fmt.Print("Enter first number: ")
+fmt.Scan(&x)
+fmt.Print("Enter second number: ")
+fmt.Scan(&y)
+
+fmt.Println("Before swapping:")
+fmt.Println("x =", x, "y =", y)
+
+// Function call using addresses
+swap(&x, &y)
+
+fmt.Println("After swapping:")
+fmt.Println("x =", x, "y =", y)
+}
+8.	WAP in go language to show the compiler throws an error if a variable is declared but not used.
+Ans:- package main
+import "fmt"
+func main() {
+	var a int = 10
+	var b int = 20
+
+	fmt.Println("Value of a =", a)
+}
+9.	WAP in go language to create a file and write hello world in it and close the file by using defer statement.
+Ans:- package main
+import (
+	"fmt"
+	"os"
+)
+func main() {
+	// Create a file
+	file, err := os.Create("hello.txt")
+	if err != nil {
+		fmt.Println("Error creating file:", err)
+		return
+	}
+	// Ensure the file is closed using defer
+	defer file.Close()
+
+	// Write data to the file
+	_, err = file.WriteString("Hello World")
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+		return
+	}
+
+	fmt.Println("File created and data written successfully.")
+}  
+
+10.	WAP in go language to illustrate the concept of call by value.
+Ans:-  package main
+import "fmt"
+// Function demonstrating call by value
+func changeValue(a int) {
+	a = 100
+	fmt.Println("Value inside function =", a)
+}
+func main() {
+	var x int = 50
+	fmt.Println("Value before function call =", x)
+	// Function call (call by value)
+	changeValue(x)
+
+	fmt.Println("Value after function call =", x)
+}
