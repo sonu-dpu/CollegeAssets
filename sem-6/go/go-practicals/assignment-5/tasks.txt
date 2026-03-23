@@ -1,0 +1,11 @@
+1.	Write a program in GO language to demonstrate working of slices (like append, remove, copy etc.)
+2.	Write a program in GO language to accept the book details such as BookID, Title, Author, Price. Read and display the details of ‘n’ number of books.
+3.	Write a program in GO language to accept one matrix and display its transpose.
+4.	Write a program in GO language to accept two matrices and display its multiplication.
+5.	Write a program in GO language to accept n records of employee information (eno,ename,salary) and display records of employees having minimum salary.
+
+6.	Write a program in GO language to sort array elements in ascending order.
+
+7.	Write a Program in GO language to accept n records of employee information (eno,ename,salary) and display record of employees having maximum salary.
+
+8.	Write a program in GO language to accept n student details like roll_no, stud_name, mark1,mark2, mark3. Calculate the total and average of marks using structure.

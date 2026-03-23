@@ -1,0 +1,297 @@
+       Subject: -Programming in GO  
+1.	Write a program in GO language to copy all elements of one array into another using a method.
+Sol:- package main
+import (
+	"fmt"
+)
+// Method to copy elements from source array to destination array
+func copyArray(source [5]int) [5]int {
+	var destination [5]int
+	for i := 0; i < len(source); i++ {
+		destination[i] = source[i]
+	}
+	return destination
+}
+
+func main() {
+	var arr1 [5]int
+	var arr2 [5]int
+	fmt.Println("Enter 5 elements:")
+	// Accept input from user
+	for i := 0; i < 5; i++ {
+		fmt.Scan(&arr1[i])
+	}
+	// Call method to copy array
+	arr2 = copyArray(arr1)
+	fmt.Println("Original Array:", arr1)
+	fmt.Println("Copied Array:", arr2)
+}
+2.	Write a program in GO language to create structure student. Write a method show() whose receiver is a pointer of struct student.
+Sol:-  package main
+import "fmt"
+// Define structure
+type student struct {
+	rollNo int
+	name   string
+	marks  float64
+}
+
+// Method with pointer receiver
+func (s *student) show() {
+	fmt.Println("Student Details:")
+	fmt.Println("Roll No:", s.rollNo)
+	fmt.Println("Name:", s.name)
+	fmt.Println("Marks:", s.marks)
+}
+
+func main() {
+	var s1 student
+
+	// Accept input from user
+	fmt.Print("Enter Roll Number: ")
+	fmt.Scan(&s1.rollNo)
+
+	fmt.Print("Enter Name: ")
+	fmt.Scan(&s1.name)
+
+	fmt.Print("Enter Marks: ")
+	fmt.Scan(&s1.marks)
+
+	// Call method using pointer receiver
+	s1.show()
+}
+3.	Write a program in GO language to create an interface shape that includes area and perimeter. Implements these methods in circle and rectangle type.
+Sol:-    package main
+import (
+	"fmt"
+	"math"
+)
+
+// Define interface
+type shape interface {
+	area() float64
+	perimeter() float64
+}
+
+// Define circle structure
+type circle struct {
+	radius float64
+}
+
+// Implement area method for circle
+func (c circle) area() float64 {
+	return math.Pi * c.radius * c.radius
+}
+
+// Implement perimeter method for circle
+func (c circle) perimeter() float64 {
+	return 2 * math.Pi * c.radius
+}
+
+// Define rectangle structure
+type rectangle struct {
+	length  float64
+	breadth float64
+}
+
+// Implement area method for rectangle
+func (r rectangle) area() float64 {
+	return r.length * r.breadth
+}
+
+// Implement perimeter method for rectangle
+func (r rectangle) perimeter() float64 {
+	return 2 * (r.length + r.breadth)
+}
+
+func main() {
+
+	var c circle
+	var r rectangle
+
+	// Input for circle
+	fmt.Print("Enter radius of circle: ")
+	fmt.Scan(&c.radius)
+
+	// Input for rectangle
+	fmt.Print("Enter length and breadth of rectangle: ")
+	fmt.Scan(&r.length, &r.breadth)
+	// Interface variables
+	var s shape
+	fmt.Println("\n--- Circle ---")
+	s = c
+	fmt.Println("Area:", s.area())
+	fmt.Println("Perimeter:", s.perimeter())
+	fmt.Println("\n--- Rectangle ---")
+	s = r
+	fmt.Println("Area:", s.area())
+	fmt.Println("Perimeter:", s.perimeter())
+}
+4.	Write a program in GO language to create an interface shape that includes area and volume. Implements these methods in square and rectangle type.
+Sol:- package main
+import "fmt"
+
+// Define interface
+type shape interface {
+	area() float64
+	volume() float64
+}
+
+// Define square structure
+type square struct {
+	side float64
+}
+
+// Implement area method for square
+func (s square) area() float64 {
+	return s.side * s.side
+}
+
+// Implement volume method for square (2D shape → volume = 0)
+func (s square) volume() float64 {
+	return 0
+}
+
+// Define rectangle structure
+type rectangle struct {
+	length  float64
+	breadth float64
+}
+
+// Implement area method for rectangle
+func (r rectangle) area() float64 {
+	return r.length * r.breadth
+}
+
+// Implement volume method for rectangle (2D shape → volume = 0)
+func (r rectangle) volume() float64 {
+	return 0
+}
+
+func main() {
+	var sq square
+	var rect rectangle
+
+	// Input for square
+	fmt.Print("Enter side of square: ")
+	fmt.Scan(&sq.side)
+
+	// Input for rectangle
+	fmt.Print("Enter length and breadth of rectangle: ")
+	fmt.Scan(&rect.length, &rect.breadth)
+
+	// Interface variable
+	var s shape
+
+	fmt.Println("\n--- Square ---")
+	s = sq
+	fmt.Println("Area:", s.area())
+	fmt.Println("Volume:", s.volume())
+
+	fmt.Println("\n--- Rectangle ---")
+	s = rect
+	fmt.Println("Area:", s.area())
+	fmt.Println("Volume:", s.volume())
+}
+
+5.	Write a program in GO language to create an interface and display its values with the help of type assertion.
+Sol:-   package main
+
+import "fmt"
+
+func main() {
+
+	// Declare an empty interface
+	var i interface{}
+
+	// Store integer value
+	i = 100
+	fmt.Println("Interface holds:", i)
+
+	// Type assertion for integer
+	val1 := i.(int)
+	fmt.Println("Integer value:", val1)
+
+	// Store string value
+	i = "Hello Go"
+	fmt.Println("\nInterface holds:", i)
+
+	// Type assertion for string
+	val2 := i.(string)
+	fmt.Println("String value:", val2)
+
+	// Store float value
+	i = 45.67
+	fmt.Println("\nInterface holds:", i)
+
+	// Type assertion with safety check
+	val3, ok := i.(float64)
+
+	if ok {
+		fmt.Println("Float value:", val3)
+	} else {
+		fmt.Println("Type assertion failed")
+	}
+}
+6.	Write a program in go language to print multiplication of two numbers using method.
+Sol:-    package main
+
+import "fmt"
+
+// Define structure
+type numbers struct {
+	num1 int
+	num2 int
+}
+
+// Method to multiply two numbers
+func (n numbers) multiply() int {
+	return n.num1 * n.num2
+}
+
+func main() {
+	var n numbers
+
+	// Accept input from user
+	fmt.Print("Enter first number: ")
+	fmt.Scan(&n.num1)
+
+	fmt.Print("Enter second number: ")
+	fmt.Scan(&n.num2)
+
+	// Call method
+	result := n.multiply()
+
+	fmt.Println("Multiplication =", result)
+}
+7.	Write a program in go language to demonstrate working type switch in interface.
+Sol:-  package main
+import "fmt"
+// Function to check type using type switch
+func checkType(i interface{}) {
+
+	switch v := i.(type) {
+
+	case int:
+		fmt.Println("Integer value:", v)
+
+	case string:
+		fmt.Println("String value:", v)
+
+	case float64:
+		fmt.Println("Float value:", v)
+
+	default:
+		fmt.Println("Unknown type")
+	}
+}
+
+func main() {
+
+	checkType(10)
+	checkType("Hello Go")
+	checkType(45.67)
+	checkType(true)
+}
+
+
